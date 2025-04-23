@@ -48,8 +48,17 @@ def base_vocabulary(unique_words):
         for char in word:
             base_vocabulary.add(char)
     return base_vocabulary
+
+# character frequency in the file
+def char_frequency_in_file(base_vocab, unique_words):
+    char_freq={}
+    for char in base_vocab:
+        char_freq[char]=0
+    for words in unique_words:
+        for char in words:
+            char_freq[char]+=1
+    return char_freq
         
-    
 # The BPE function  
 def byte_pair_encoding():
     
@@ -57,8 +66,42 @@ def byte_pair_encoding():
     print(unique_words)
     base_vocab=base_vocabulary(unique_words)
     print(base_vocab)
+    freq=char_frequency_in_file(base_vocab, unique_words)
+    print(freq)
+
+# Merge the pair to create a new subword unit
+
+ 
+def merge(unique_words):
+    corpus=[]
+    for word in unique_words:
+        corpus.append(list(word))
     
     
+    for list_word in corpus:
+        freq_count={}
+        for i in range(len(list_word)-1):
+            pair=list_word[i]+list_word[i+1]
+            if pair in freq_count:
+                freq_count[pair]+=1
+            else:
+                freq_count[pair]=1
+    
+    max_freq= max(freq_count,key=freq_count.get)
+    
+    for list_word in corpus:
+        if max_freq in list_word:
+            pass 
+    
+                
+    
+                
+            
+            
+        
+    
+    
+
     
 def main():
     byte_pair_encoding()
