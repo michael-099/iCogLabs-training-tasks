@@ -1,0 +1,8 @@
+This is a sample text file.
+It contains multiple lines of text,
+some with repeated words like the the and and.
+There are also numbers like 123 and 456.78.
+And some punctuation! like commas, periods. and exclamation marks!
+Let's include some uppercase words as well: EXAMPLE TEXT.
+This line has some extra whitespace:    here.
+Finally, this is the last line of the sample text.
