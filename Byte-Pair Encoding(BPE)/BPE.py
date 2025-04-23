@@ -40,6 +40,7 @@ def get_unique_words_in_file(file_path):
     except FileNotFoundError:
         print(f"ERORR: file not found at {file_path}")
 
+
 # function for extracting base vocabulary
 def base_vocabulary(unique_words):
     base_vocabulary=set()
@@ -53,13 +54,17 @@ def base_vocabulary(unique_words):
 def byte_pair_encoding():
     
     unique_words = get_unique_words_in_file("ptbdataset//ptp.dummy.txt")
-    base_vocabulary=base_vocabulary(unique_words)
-    print(base_vocabulary)
+    print(unique_words)
+    base_vocab=base_vocabulary(unique_words)
+    print(base_vocab)
+    
+    
     
 def main():
     byte_pair_encoding()
       
-if "__name__" == "__main__":
+if __name__ == "__main__":
+    print("check")
     main()
     
 
