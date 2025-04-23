@@ -48,5 +48,5 @@ def base_vocabulary():
     pass
 
 
-words_in_file("ptbdataset/ptp.dummy.txt")
+get_words_in_file("ptbdataset/ptp.dummy.txt")
 
