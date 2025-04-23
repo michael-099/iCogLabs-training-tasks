@@ -45,6 +45,7 @@ def get_words_in_file(file_path):
         print(f"ERORR: file not found at {file_path}")
 
 def base_vocabulary():
+    pass
 
 
 words_in_file("ptbdataset/ptp.dummy.txt")
