@@ -1,6 +1,6 @@
-import kagglehub
+import pandas as pd 
 
-# Download latest version
-path = kagglehub.dataset_download("aliakay8/penn-treebank-dataset")
+data = pd.read_csv("ptbdataset\ptb.train.txt")
 
-print("Path to dataset files:", path)
+print(data)
+
