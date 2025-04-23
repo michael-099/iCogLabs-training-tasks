@@ -2,7 +2,8 @@ import pandas as pd
 from tokenizers import Tokenizer, models, trainers, pre_tokenizers
 
 
-#  using tokenizers lib
+'''using tokenizers lib '''
+
 def tokenize():
     
     tokenizer = Tokenizer(models.BPE())
@@ -10,15 +11,16 @@ def tokenize():
 
     trainer = trainers.BpeTrainer(vocab_size=2000, show_progress=True)
 
-    files = ["ptbdataset\ptb.train.txt"]
+    files = ["ptbdataset\\ptb.train.txt"]
     tokenizer.train(files, trainer)
 
     print(tokenizer.encode("hello world").tokens)
 
 
-# from scratch implementation implementation 
+'''from scratch implementation implementation '''
 
-def get_words_in_file(file_path):
+# extracting the unique words from the corpus 
+def get_unique_words_in_file(file_path):
     lines=[]
     unique_words=set()
     
@@ -27,26 +29,37 @@ def get_words_in_file(file_path):
             content = file.read()
             
             cleaned_content = content.replace('\n', ' ')
-            print(cleaned_content)
             
-           
             words = cleaned_content.split(" ")
-            print(words)
             
             for word in words:
                 unique_words.add(word)
-        print(unique_words)
-            
-        print("completed")
-        print(len(unique_words))
+       
         return list(unique_words)
         
     except FileNotFoundError:
         print(f"ERORR: file not found at {file_path}")
 
-def base_vocabulary():
-    pass
-
-
-get_words_in_file("ptbdataset/ptp.dummy.txt")
+# function for extracting base vocabulary
+def base_vocabulary(unique_words):
+    base_vocabulary=set()
+    for word in unique_words:
+        for char in word:
+            base_vocabulary.add(char)
+    return base_vocabulary
+        
+    
+# The BPE function  
+def byte_pair_encoding():
+    
+    unique_words = get_unique_words_in_file("ptbdataset//ptp.dummy.txt")
+    base_vocabulary=base_vocabulary(unique_words)
+    print(base_vocabulary)
+    
+def main():
+    byte_pair_encoding()
+      
+if "__name__" == "__main__":
+    main()
+    
 
