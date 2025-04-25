@@ -72,10 +72,12 @@ def byte_pair_encoding():
 # Merge the pair to create a new subword unit
 def merge(unique_words):
     corpus=[]
+    
+    # unique words as a list of characters 
     for word in unique_words:
         corpus.append(list(word))
     
-    
+    # count pair frequency 
     for list_word in corpus:
         freq_count={}
         for i in range(len(list_word)-1):
@@ -84,9 +86,10 @@ def merge(unique_words):
                 freq_count[pair]+=1
             else:
                 freq_count[pair]=1
-    
+    # the maximum frequency pair 
     max_freq= max(freq_count,key=freq_count.get)
     
+    # merging the words with maximum frequency
     for list_word in corpus:
         if max_freq in list_word:
             pass 
@@ -97,8 +100,6 @@ def merge(unique_words):
             
             
         
-    
-    
 
     
 def main():
