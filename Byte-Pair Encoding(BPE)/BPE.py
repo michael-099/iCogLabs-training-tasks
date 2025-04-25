@@ -70,8 +70,6 @@ def byte_pair_encoding():
     print(freq)
 
 # Merge the pair to create a new subword unit
-
- 
 def merge(unique_words):
     corpus=[]
     for word in unique_words:
