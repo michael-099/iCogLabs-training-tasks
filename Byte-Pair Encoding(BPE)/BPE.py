@@ -2,21 +2,38 @@ import pandas as pd
 import numpy as np
 from tokenizers import Tokenizer, models, trainers, pre_tokenizers
 from collections import Counter
+import time
 
 
 '''using tokenizers lib '''
 
 def tokenize():
     
+   from tokenizers import Tokenizer, models, trainers, pre_tokenizers
+
+def tokenize():
+    # Train tokenizer on the training file
     tokenizer = Tokenizer(models.BPE())
     tokenizer.pre_tokenizer = pre_tokenizers.Whitespace()
 
     trainer = trainers.BpeTrainer(vocab_size=2000, show_progress=True)
 
+    # Train the tokenizer on the training file
     files = ["ptbdataset\\ptb.train.txt"]
     tokenizer.train(files, trainer)
 
-    print(tokenizer.encode("hello world").tokens)
+    # Load and tokenize the test file
+    test_file_path = "ptbdataset\\ptb.test.txt"
+    with open(test_file_path, 'r') as f:
+        test_text = f.read()
+
+    # Tokenize the test text using the trained tokenizer
+    tokens = tokenizer.encode(test_text).tokens
+    
+    # Print the tokens from the test file
+    print(tokens[:100])  # Show the first 100 tokens for example
+
+
 
 
 '''from scratch implementation implementation '''
@@ -77,7 +94,7 @@ def merge_most_frequent_pair(corpus, best_pair):
 
 # The BPE function
 def byte_pair_encoding(num_merges=10):
-    unique_words = get_unique_words_in_file("ptbdataset/ptb.train.txt")
+    unique_words = get_unique_words_in_file("ptbdataset/ptb.test.txt")
     if not unique_words:
         return
 
@@ -99,7 +116,18 @@ def byte_pair_encoding(num_merges=10):
 
 def main():
     print("Running BPE from scratch...")
-    byte_pair_encoding(num_merges=100)  
+    start_bpe = time.time()
+    byte_pair_encoding(num_merges=100)
+    end_bpe = time.time()
+    print(f"Manual BPE tokenization time: {end_bpe - start_bpe:.4f} seconds")
+
+    # Time for HuggingFace Tokenizer
+    print("\nRunning HuggingFace BPE...")
+    start_lib = time.time()
+    tokenize()
+    end_lib = time.time()
+    print(f"Library BPE tokenization time: {end_lib - start_lib:.4f} seconds")
+
 
 if __name__ == "__main__":
     main()
