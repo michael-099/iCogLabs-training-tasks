@@ -1,0 +1,27 @@
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+  become: yes
+
+- name: Ensure Apache is enabled and started
+  systemd:
+    name: apache2
+    enabled: yes
+    state: started
+  become: yes
+  notify: Restart Apache
+
+- name: Configure Apache homepage with Jinja2 template
+  template:
+    src: index.j2
+    dest: /var/www/html/index.html
+  become: yes
+  notify: Restart Apache
+
+- name: Configure UFW to allow HTTP
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+  become: yes

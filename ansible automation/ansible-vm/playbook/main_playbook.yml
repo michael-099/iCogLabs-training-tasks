@@ -1,0 +1,22 @@
+- name: Configure VMs
+  hosts: all
+  become: yes
+  tasks:
+    - name: Generate deployment report
+      block:
+        - set_fact:
+            report: "IPs: {{ ansible_host }} | Services: {{ ansible_facts.services }}"
+        - copy:
+            content: "{{ report }}"
+            dest: /tmp/deployment_report.txt
+      rescue:
+        - debug:
+            msg: "Failed to start a service, attempting restart"
+        - systemd:
+            name: "{{ item }}"
+            state: restarted
+          loop: "{{ ansible_facts.services.keys() | list }}"
+          ignore_errors: yes
+      always:
+        - debug:
+            msg: "Deployment completed with status check"

@@ -1,0 +1,34 @@
+- name: Install MySQL
+  apt:
+    name: mysql-server
+    state: present
+  become: yes
+
+- name: Ensure MySQL is enabled and started
+  systemd:
+    name: mysql
+    enabled: yes
+    state: started
+  become: yes
+  notify: Restart MySQL
+
+- name: Create sample database
+  mysql_db:
+    name: sample_db
+    state: present
+  become: yes
+
+- name: Create database user
+  mysql_user:
+    name: dbuser
+    password: password123
+    priv: 'sample_db.*:ALL'
+    state: present
+  become: yes
+
+- name: Configure UFW to allow MySQL
+  ufw:
+    rule: allow
+    port: 3306
+    proto: tcp
+  become: yes

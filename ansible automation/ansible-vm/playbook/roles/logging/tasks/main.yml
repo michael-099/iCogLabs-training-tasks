@@ -1,0 +1,13 @@
+- name: Create shared log directory
+  file:
+    path: /var/log/shared
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Push web server logs to shared directory
+  copy:
+    src: /var/log/apache2/access.log
+    dest: /var/log/shared/web_access.log
+    remote_src: yes
+  become: yes
